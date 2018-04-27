@@ -63,6 +63,9 @@ void loop()
 	while (lengd() < 40)
 	{
 		stopCar();
+
+		scanForNewDirection();
+
 		if (randomTurn == 1)
 			driveRight(); // bíll snýst til hægri
 		else if (randomTurn == -1)

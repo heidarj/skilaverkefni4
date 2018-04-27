@@ -158,5 +158,5 @@ int scanForNewDirection()
 		}
 	}
 
-	return newDirection
+	return newDirection;
 }
