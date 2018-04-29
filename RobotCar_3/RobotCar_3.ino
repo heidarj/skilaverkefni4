@@ -60,16 +60,43 @@ void loop()
 		mp3_play_track(lagNr++);
 	}
 
+  if (lengd() == lengdB() && lengd() < 40)
+  {
+    stopCar();
+
+    backCar();
+
+    delay(500);
+
+    stopCar();
+
+    scanForNewDirection();
+    if (scanForNewDirection() < 90)
+      driveRight(); // bíll snýst til hægri
+    else if (scanForNewDirection() < 90)
+      driveLeft(); // bíll snýst til vinstri
+    else 
+      startCar();
+    delay(300);    // Gefa tíma til að beygja ca +/- 90°
+    startCar();
+    
+  }
+
+  
 	while (lengd() < 40)
 	{
 		stopCar();
-		if (randomTurn == 1)
-			driveRight(); // bíll snýst til hægri
-		else if (randomTurn == -1)
-			driveLeft(); // bíll snýst til vinstri
-		delay(300);		 // Gefa tíma til að beygja ca +/- 90°
-		startCar();
-		randomTurn = randomTurn * -1;
-		delay(1000);
+    
+		scanForNewDirection();
+
+    if (scanForNewDirection() < 90)
+      driveRight(); // bíll snýst til hægri
+    else if (scanForNewDirection() < 90)
+      driveLeft(); // bíll snýst til vinstri
+    else 
+      startCar();
+    delay(300);    // Gefa tíma til að beygja ca +/- 90°
+    startCar();
+    delay(1000);
 	}
 } //End of loop *********************

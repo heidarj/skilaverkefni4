@@ -67,6 +67,21 @@ unsigned int lengd() //Reikna lengd ad endurvarpi
 	return tmp;			 //Skila lengdinni til baka til þess sem kallaði á fall
 }
 
+unsigned int lengdB() //Reikna lengd ad endurvarpi
+{
+  unsigned int tmp;
+  digitalWrite(sonarTrigger_, HIGH); //Setja trigger utgang í hastoðu (Byrja StartPuls)
+  delayMicroseconds(10);         //bíða í 10 us  (Start púls er 10us breiður)
+  digitalWrite(sonarTrigger_, LOW);  //Setja trigger útgang í lastodu (enda startpuls)
+  tmp = pulseIn(sonarEcho_, HIGH);
+
+  tmp = tmp * 0.01715; //tmp*34300cm/s /2 =tmp*0,01715cm/us
+  delay(300);
+  return tmp;      //Skila lengdinni til baka til þess sem kallaði á fall
+}
+
+
+
 void startCar()
 {
 	digitalWrite(motorVgir_, HIGH);
@@ -158,5 +173,5 @@ int scanForNewDirection()
 		}
 	}
 
-	return newDirection
+	return newDirection;
 }

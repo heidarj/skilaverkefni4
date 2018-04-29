@@ -59,17 +59,19 @@ void loop()
 			lagNr = 1;
 		mp3_play_track(lagNr++);
 	}
-
+ 
 	while (lengd() < 40)
 	{
 		stopCar();
 
 		scanForNewDirection();
 
-		if (randomTurn == 1)
+		if (newDirection() < 90)
 			driveRight(); // bíll snýst til hægri
-		else if (randomTurn == -1)
+		else if (newDrection() < 90)
 			driveLeft(); // bíll snýst til vinstri
+    else 
+      startCar();
 		delay(300);		 // Gefa tíma til að beygja ca +/- 90°
 		startCar();
 		randomTurn = randomTurn * -1;
