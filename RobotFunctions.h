@@ -52,6 +52,8 @@ void reiknaPulsBreidd(int gradur, int snunAtt) //réttsaelis=1 rangsaelis=-1
 	servoMain.write(stefna);
 }
 
+// nytt comment
+
 //******************** unsigned int lengd() Reiknar fjarlaegd ad endurvarpi ***************
 //Athugid ad nota Tetta fall ekki nema SONAR se tengdur annars bídur tolvan endalaust
 

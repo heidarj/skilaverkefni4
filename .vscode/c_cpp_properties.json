@@ -1,20 +1,31 @@
 {
-    "configurations": [
-        {
-            "name": "Win32",
-            "includePath": [
-                "C:\\Program Files (x86)\\Arduino\\hardware\\arduino\\avr\\cores\\arduino"
-            ],
-            "browse": {
-                "limitSymbolsToIncludedHeaders": false,
-                "path": [
-                    "C:\\Program Files (x86)\\Arduino\\hardware\\arduino\\avr\\cores\\arduino"
-                ]
-            },
-            "intelliSenseMode": "msvc-x64",
-            "cStandard": "c11",
-            "cppStandard": "c++17"
-        }
-    ],
-    "version": 3
+	"configurations": [{
+		"name": "Win32",
+		"includePath": [
+			"C:\\Program Files (x86)\\Arduino\\hardware\\arduino\\avr\\cores\\arduino",
+			"${workspaceFolder}",
+			"C:\\MinGW\\lib\\gcc\\mingw32\\6.3.0\\include\\c++",
+			"C:/MinGW/lib/gcc/mingw32/6.3.0/include/c++/tr1",
+			"C:/MinGW/lib/gcc/mingw32/6.3.0/include/c++/mingw32",
+			"C:/MinGW/lib/gcc/mingw32/6.3.0/include/c++/backward",
+			"C:/MinGW/lib/gcc/mingw32/6.3.0/include",
+			"C:/MinGW/lib/gcc/mingw32/6.3.0/include-fixed"
+		],
+		"defines": [
+			"_DEBUG",
+			"UNICODE"
+		],
+		"browse": {
+			"limitSymbolsToIncludedHeaders": true,
+			"path": [
+				"C:\\Program Files (x86)\\Arduino\\hardware\\arduino\\avr\\cores\\arduino",
+				"${workspaceFolder}",
+				"C:\\MinGW\\lib\\gcc\\mingw32\\6.3.0\\include\\c++"
+			]
+		},
+		"intelliSenseMode": "msvc-x64",
+		"cStandard": "c11",
+		"cppStandard": "c++17"
+	}],
+	"version": 3
 }
