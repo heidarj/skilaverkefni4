@@ -49,32 +49,60 @@ void setup()
 //*************************** Keyrslulykkjan **********************
 void loop()
 {
-	reiknaPulsBreidd(0 - 10, -1); //SONAR beint framm, í þessum bíl er leiðrétt um -10°
-	delay(100);
-	startCar(); // Bíll keyrir áfram
-	delay(100);
+	reiknaPulsBreidd(0 - 10, -1);	 //SONAR beint framm, í þessum bíl er leiðrétt um -10°
 	if (digitalRead(RXspilari_) == 1) //Ef Spilari upptekinn þá er RXspilari==0
 	{								  //RXspilari (D2) tengist BUSY tengi á spilara sjá mynd 17
 		if (lagNr == 17)
 			lagNr = 1;
-		mp3_play_track(lagNr++);
+		mp3_play_track(lagNr);
 	}
- 
+	delay(100);
+	startCar(); // Bíll keyrir áfram
+
+	geymaLengdir(maelingar, lengd());
+
 	while (lengd() < 40)
 	{
 		stopCar();
 
-		scanForNewDirection();
+		backCar();
 
-		if (newDirection() < 90)
-			driveRight(); // bíll snýst til hægri
-		else if (newDrection() < 90)
-			driveLeft(); // bíll snýst til vinstri
-    else 
-      startCar();
-		delay(300);		 // Gefa tíma til að beygja ca +/- 90°
+		delay(500);
+
+		stopCar();
+
+   newDirection = scanForNewDirection();
+
+		switch (newDirection)
+		{
+		case 0:
+			driveLeft();
+			delay(500);
+			stopCar();
+			break;
+		case 1:
+			driveLeft();
+			delay(250);
+			stopCar();
+			break;
+		case 2:
+			driveRight();
+			delay(250);
+			stopCar();
+			break;
+		case 3:
+			driveRight();
+			delay(500);
+			stopCar();
+			break;
+
+    default:
+      driveRight();
+      delay(1000);
+      stopCar();
+      break;
+		}
+   
 		startCar();
-		randomTurn = randomTurn * -1;
-		delay(1000);
 	}
 } //End of loop *********************

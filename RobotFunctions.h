@@ -33,6 +33,8 @@ int lengdX = 0;
 unsigned long time; //Notuð með millis() fallinu til að ákveða spilatíma laga
 unsigned long timeX;
 
+int maelingar[3] = {};
+
 int newDirection;
 int skannadarattir[4];
 
@@ -65,6 +67,25 @@ unsigned int lengd() //Reikna lengd ad endurvarpi
 
 	tmp = tmp * 0.01715; //tmp*34300cm/s /2 =tmp*0,01715cm/us
 	return tmp;			 //Skila lengdinni til baka til þess sem kallaði á fall
+}
+
+void geymaLengdir(int(listi[3]), int nyttgildi)
+{
+	listi[0] = listi[1];
+	listi[1] = listi[2];
+	listi[2] = nyttgildi;
+}
+
+bool allarLengdirEins(int listi[3])
+{
+	if (listi[0] == listi[1] && listi[0] == listi[2])
+	{
+		return true;
+	}
+	else
+	{
+		return false;
+	}
 }
 
 void startCar()
@@ -147,6 +168,7 @@ int scanForNewDirection()
 		{
 			servoMain.write(45 * i);
 			skannadarattir[i] = lengd();
+      delay(300);
 		}
 	}
 

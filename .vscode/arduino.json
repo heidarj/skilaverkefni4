@@ -1,4 +1,4 @@
 {
     "board": "arduino:avr:uno",
-    "sketch": "RobotCar_3.ino"
+    "sketch": "skilaverkefni4.ino"
 }
