@@ -35,35 +35,43 @@ void setup()
 	mySerial.begin(9600);
 	delay(500);
 	//mp3_set_volume(25);
-	mp3_set_volume(20);
+	mp3_set_volume(25);
 	delay(100);
 
-	mp3_play_track(17); // 17. Bíll í gang (gamli bíllinn)
-	delay(5000);
-	mp3_play_track(1); // 1. Riding along in my automobile
-	lagNr = 2;
+	mp3_play_track(1); // 17. Bíll í gang (gamli bíllinn)
+	delay(3000);
+  
+	mp3_play_track(2); // 1. Riding along in my automobile
+  lagNr = 2;
+  
 	//Timar
 	time = millis(); //Setur time breytuna á tíma liðinn frá starti
 	timeX = time;
-	reiknaPulsBreidd(0 - 10, -1); //SONAR beint framm, í þessum bíl er leiðrétt um -10°
+	servoMain.write(95); //SONAR beint framm, í þessum bíl er leiðrétt um -10°
 	lengdX = lengd();
 } //End of setup *********
 
 //*************************** Keyrslulykkjan **********************
 void loop()
 {
+  if (digitalRead(RXspilari_) == 1 || lagNr != 2)
+  {
+    mp3_play_track(2);
+    lagNr = 2;
+  }
+  
 	delay(100);
 	startCar(); // Bíll keyrir áfram
 
-	geymaLengdir(maelingar, lengd());
-
 	while (lengd() < 40)
 	{
+    mp3_play_track(3);
+    lagNr = 3;
 		stopCar();
 
+    mp3_play_track(4);
+    lagNr = 4;
 		backCar();
-
-		delay(500);
 
 		breakCar();
 
@@ -72,14 +80,14 @@ void loop()
   		case true:
         digitalWrite(ledPin13, HIGH);
         driveLeft();
-        delay(150);
+        delay(350);
         digitalWrite(ledPin13, LOW);
   			breakCar();
   			break;
   		case false:
         digitalWrite(ledPin12, HIGH);
         driveRight();
-        delay(300);
+        delay(350);
         digitalWrite(ledPin12, LOW);
   			breakCar();
   			break;

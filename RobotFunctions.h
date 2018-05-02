@@ -33,8 +33,6 @@ int lengdX = 0;
 unsigned long time; //Notuð með millis() fallinu til að ákveða spilatíma laga
 unsigned long timeX;
 
-int maelingar[3] = {};
-
 //******** Reikna púlsbreidd frá gráðum og kalla síðan á servoMain.write(stefna) *******
 void reiknaPulsBreidd(int gradur, int snunAtt) //réttsaelis=1 rangsaelis=-1
 {
@@ -66,25 +64,6 @@ unsigned int lengd() //Reikna lengd ad endurvarpi
 	return tmp;			 //Skila lengdinni til baka til þess sem kallaði á fall
 }
 
-void geymaLengdir(int(listi[3]), int nyttgildi)
-{
-	listi[0] = listi[1];
-	listi[1] = listi[2];
-	listi[2] = nyttgildi;
-}
-
-bool allarLengdirEins(int listi[3])
-{
-	if (listi[0] == listi[1] && listi[0] == listi[2])
-	{
-		return true;
-	}
-	else
-	{
-		return false;
-	}
-}
-
 void startCar()
 {
 	digitalWrite(motorVgir_, HIGH);
@@ -106,14 +85,19 @@ void stopCar()
   {
     analogWrite(motorVpwm_, i);
     analogWrite(motorHpwm_, i);
+    delay(5);
   }
 }
 void backCar()
 {
 	digitalWrite(motorVgir_, LOW);
 	digitalWrite(motorHgir_, HIGH);
-	analogWrite(motorVpwm_, VgrunnV);
-	analogWrite(motorHpwm_, VgrunnH);
+  for (int i = 150; i > 0; i--)
+  {
+    analogWrite(motorVpwm_, i);
+    analogWrite(motorHpwm_, i);
+    delay(5);
+  }
 }
 
 void driveLeft()
@@ -134,19 +118,18 @@ void driveRight()
 // Vinstri = true, hægri = false;
 bool beygja()
 {
-  int skanna35gradur;
+  int skanna45gradur;
   int skanna125gradur;
   
-  servoMain.write(35);
-  skanna35gradur = lengd();
+  servoMain.write(45);
+  delay(500);
+  skanna45gradur = lengd();
   
-  delay(300);
-  
-  servoMain.write(125);
+  servoMain.write(150);
+  delay(500);
   skanna125gradur = lengd();
   
+  servoMain.write(95);
   
-  servoMain.write(80);
-  
-  return skanna35gradur > skanna125gradur;
+  return skanna45gradur < skanna125gradur;
 }
