@@ -35,9 +35,6 @@ unsigned long timeX;
 
 int maelingar[3] = {};
 
-int newDirection;
-int skannadarattir[4];
-
 //******** Reikna púlsbreidd frá gráðum og kalla síðan á servoMain.write(stefna) *******
 void reiknaPulsBreidd(int gradur, int snunAtt) //réttsaelis=1 rangsaelis=-1
 {
@@ -102,42 +99,17 @@ void breakCar()
 }
 void stopCar()
 {
-	digitalWrite(motorVgir_, HIGH);
-	digitalWrite(motorHgir_, LOW);
-	analogWrite(motorVpwm_, 150);
-	analogWrite(motorHpwm_, 150);
-	delay(100);
-	analogWrite(motorVpwm_, 125);
-	analogWrite(motorHpwm_, 125);
-	delay(100);
-	analogWrite(motorVpwm_, 115);
-	analogWrite(motorHpwm_, 115);
-	delay(100);
-	analogWrite(motorVpwm_, 100);
-	analogWrite(motorHpwm_, 100);
-	delay(100);
-	analogWrite(motorVpwm_, 75);
-	analogWrite(motorHpwm_, 75);
-	delay(100);
-	analogWrite(motorVpwm_, 50);
-	analogWrite(motorHpwm_, 50);
-	delay(100);
-	analogWrite(motorVpwm_, 25);
-	analogWrite(motorHpwm_, 25);
-	delay(100);
-	analogWrite(motorVpwm_, 15);
-	analogWrite(motorHpwm_, 15);
-	delay(100);
-	analogWrite(motorVpwm_, 5);
-	analogWrite(motorHpwm_, 5);
-	delay(100);
-	analogWrite(motorVpwm_, 0);
-	analogWrite(motorHpwm_, 0);
+  digitalWrite(motorVgir_, HIGH);
+  digitalWrite(motorHgir_, LOW);
+  
+  for (int i = 150; i > 0; i--)
+  {
+    analogWrite(motorVpwm_, i);
+    analogWrite(motorHpwm_, i);
+  }
 }
 void backCar()
 {
-	stopCar();
-	delay(500);
 	digitalWrite(motorVgir_, LOW);
 	digitalWrite(motorHgir_, HIGH);
 	analogWrite(motorVpwm_, VgrunnV);
@@ -159,26 +131,22 @@ void driveRight()
 	analogWrite(motorHpwm_, VgrunnH);
 }
 
-int scanForNewDirection()
+// Vinstri = true, hægri = false;
+bool beygja()
 {
-	newDirection = 0;
-	for (int i = 0; i < 5; i++)
-	{
-		if (45 * i != 90)
-		{
-			servoMain.write(45 * i);
-			skannadarattir[i] = lengd();
-      delay(300);
-		}
-	}
-
-	for (int i = 0; i < 4; i++)
-	{
-		if (skannadarattir[i] > newDirection)
-		{
-			newDirection = i;
-		}
-	}
-
-	return newDirection;
+  int skanna35gradur;
+  int skanna125gradur;
+  
+  servoMain.write(35);
+  skanna35gradur = lengd();
+  
+  delay(300);
+  
+  servoMain.write(125);
+  skanna125gradur = lengd();
+  
+  
+  servoMain.write(80);
+  
+  return skanna35gradur > skanna125gradur;
 }

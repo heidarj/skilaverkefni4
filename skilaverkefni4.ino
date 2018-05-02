@@ -11,6 +11,9 @@
 #include <SoftwareSerial.h>
 #include "MyDFPlayer.h"
 
+int ledPin12 = 12;
+int ledPin13 = 13;
+
 //************************** uppsetning á forritinu *****************
 void setup()
 {
@@ -49,13 +52,6 @@ void setup()
 //*************************** Keyrslulykkjan **********************
 void loop()
 {
-	reiknaPulsBreidd(0 - 10, -1);	 //SONAR beint framm, í þessum bíl er leiðrétt um -10°
-	if (digitalRead(RXspilari_) == 1) //Ef Spilari upptekinn þá er RXspilari==0
-	{								  //RXspilari (D2) tengist BUSY tengi á spilara sjá mynd 17
-		if (lagNr == 17)
-			lagNr = 1;
-		mp3_play_track(lagNr);
-	}
 	delay(100);
 	startCar(); // Bíll keyrir áfram
 
@@ -69,40 +65,30 @@ void loop()
 
 		delay(500);
 
-		stopCar();
+		breakCar();
 
-   newDirection = scanForNewDirection();
-
-		switch (newDirection)
+		switch (beygja())
 		{
-		case 0:
-			driveLeft();
-			delay(500);
-			stopCar();
-			break;
-		case 1:
-			driveLeft();
-			delay(250);
-			stopCar();
-			break;
-		case 2:
-			driveRight();
-			delay(250);
-			stopCar();
-			break;
-		case 3:
-			driveRight();
-			delay(500);
-			stopCar();
-			break;
-
-    default:
-      driveRight();
-      delay(1000);
-      stopCar();
-      break;
+  		case true:
+        digitalWrite(ledPin13, HIGH);
+        driveLeft();
+        delay(150);
+        digitalWrite(ledPin13, LOW);
+  			breakCar();
+  			break;
+  		case false:
+        digitalWrite(ledPin12, HIGH);
+        driveRight();
+        delay(300);
+        digitalWrite(ledPin12, LOW);
+  			breakCar();
+  			break;
+  
+      default:
+        backCar();
+        delay(500);
+        breakCar();
+        break;
 		}
-   
-		startCar();
 	}
 } //End of loop *********************
